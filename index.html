@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>咸閒不鹹 - 空間轉型與設計工作室</title>
+    
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 引入 Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入 GSAP 與 ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* 極淺灰背景 */
+            color: #1a1a1a;
+        }
+
+        /* 隱藏 Before/After 預設的 range input 樣式 */
+        .slider-target::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 40px;
+            height: 100%;
+            cursor: ew-resize;
+            background: transparent;
+        }
+        .slider-target::-moz-range-thumb {
+            width: 40px;
+            height: 100%;
+            cursor: ew-resize;
+            background: transparent;
+            border: none;
+        }
+
+        /* 自訂作品卡的遮罩動畫 (CSS 輔助) */
+        .work-card .overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .work-card:hover .overlay {
+            opacity: 1;
+        }
+        .work-card img {
+            transition: transform 0.5s ease;
+        }
+        .work-card:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-gray-800 selection:text-white relative">
+
+    <!-- 全局背景：高斯模糊工程藍圖 -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <!-- 藍圖圖片 (調降模糊程度) -->
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=2000" 
+             alt="Blueprint Background" 
+             class="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-multiply blur-[4px]" />
+        <!-- 半透明遮罩，調降濃度讓藍圖更明顯 -->
+        <div class="absolute inset-0 bg-gray-50/60"></div>
+    </div>
+
+    <!-- 導覽列 -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-gray-200">
+    </nav>
+
+    <!-- 首頁 Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center pt-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-20">
+            <!-- 裝飾性幾何背景 -->
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+            <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-gray-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10 hero-content">
+            <div class="inline-block mb-4 px-3 py-1 bg-gray-200 text-gray-600 rounded-full text-xs font-semibold tracking-wider">DESIGN STUDIO</div>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
+                精準定位，快速提案。<br>為老舊店面注入現代洗鍊靈魂。
+            </h1>
+            <p class="text-lg text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                我們拋棄冗長繁瑣的傳統流程，以高效、理性的策略進行空間與品牌轉型。讓您的店面在最短時間內，煥發全新商業價值。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#works" class="bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition shadow-lg hover:shadow-xl">查看轉型案例</a>
+                <a href="#contact" class="bg-white text-gray-900 border border-gray-300 px-8 py-4 rounded-full font-medium hover:bg-gray-50 transition">立即預約討論</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務介紹 Services -->
+    <section id="services" class="py-24 px-6 bg-white/70 section-reveal">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">核心服務</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">專注於痛點解決，我們提供快速且具備商業思維的設計服務。</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="p-8 bg-gray-50 rounded-2xl hover:bg-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-gray-900 text-white rounded-xl flex items-center justify-center mb-6 text-xl">01</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">店面轉型諮詢</h3>
+                    <p class="text-gray-600 leading-relaxed">針對營運遇見瓶頸的老店，提供空間動線、視覺風格與客群定位的全面診斷與快速解方。</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="p-8 bg-gray-50 rounded-2xl hover:bg-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-gray-900 text-white rounded-xl flex items-center justify-center mb-6 text-xl">02</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">品牌視覺與空間統整</h3>
+                    <p class="text-gray-600 leading-relaxed">消弭品牌形象與實體空間的落差，打造從招牌、菜單到室內裝潢高度一致的洗鍊體驗。</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="p-8 bg-gray-50 rounded-2xl hover:bg-gray-100 transition duration-300">
+                    <div class="w-12 h-12 bg-gray-900 text-white rounded-xl flex items-center justify-center mb-6 text-xl">03</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">高效率提案流程</h3>
+                    <p class="text-gray-600 leading-relaxed">跳脫傳統設計公司的漫長等待，我們透過模組化與精準溝通，在最短時間內提出具體設計方案。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 案例研究 Case Study (Before/After) -->
+    <section id="case-study" class="py-24 px-6 bg-gray-900/90 text-white section-reveal">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- 左側敘事 -->
+                <div class="space-y-8 case-narrative">
+                    <div>
+                        <span class="text-gray-400 text-sm font-semibold tracking-widest uppercase">Case Study</span>
+                        <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">日式無煙燒肉店：<br>從昏暗雜亂到現代洗鍊</h2>
+                    </div>
+                    
+                    <div class="border-l-2 border-gray-700 pl-6 story-step">
+                        <h4 class="font-bold text-lg mb-2">Background 背景與挑戰</h4>
+                        <p class="text-gray-400">業主經營十年的傳統燒肉店，面臨空間昏暗、動線不佳、排煙管線外露且充滿油膩感，導致年輕客群大量流失。</p>
+                    </div>
+                    
+                    <div class="border-l-2 border-gray-700 pl-6 story-step">
+                        <h4 class="font-bold text-lg mb-2">Strategy 設計策略</h4>
+                        <p class="text-gray-400">我們在兩週內提出「隱性排煙」與「灰階極簡」策略，重新規劃燈光與座位配置，並以不銹鋼與水泥肌理取代老舊木作。</p>
+                    </div>
+                    
+                    <div class="border-l-2 border-gray-700 pl-6 story-step">
+                        <h4 class="font-bold text-lg mb-2">Result 成果效益</h4>
+                        <p class="text-gray-400">完工後一個月內，社群打卡數成長 300%，並成功吸引商務聚餐與年輕情侶客群，營業額顯著提升。</p>
+                    </div>
+                </div>
+
+                <!-- 右側 Before/After Slider -->
+                <div class="relative w-full aspect-video select-none rounded-2xl overflow-hidden shadow-2xl" id="slider-container">
+                    <!-- 底層圖片 (After - 改造後：現代燒烤店) -->
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=1280" 
+                         alt="改造後" 
+                         class="absolute top-0 left-0 w-full h-full object-cover pointer-events-none" />
+
+                    <!-- 頂層圖片 (Before - 改造前：毛胚屋) -->
+                    <div id="before-image-wrapper" class="absolute top-0 left-0 w-full h-full pointer-events-none" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);">
+                        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1280" 
+                             alt="改造前" 
+                             class="absolute top-0 left-0 w-full h-full object-cover pointer-events-none max-w-none" />
+                    </div>
+
+                    <!-- 滑桿中間的拉環 -->
+                    <div id="slider-handle" class="absolute top-0 bottom-0 w-1 bg-white pointer-events-none z-10 flex items-center justify-center" style="left: 50%; transform: translateX(-50%);">
+                        <div class="w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-900">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                                <path d="M136,40V216a8,8,0,0,1-16,0V40a8,8,0,0,1,16,0ZM221.66,133.66l-32,32a8,8,0,0,1-11.32-11.32L196.69,136H168a8,8,0,0,1,0-16h28.69l-18.35-18.34a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,221.66,133.66ZM88,120H59.31l18.35-18.34a8,8,0,0,0-11.32-11.32l-32,32a8,8,0,0,0,0,11.32l32,32a8,8,0,0,0,11.32-11.32L59.31,136H88a8,8,0,0,0,0-16Z"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- 透明的互動 Range Input -->
+                    <input type="range" min="0" max="100" value="50" id="slider" class="slider-target absolute top-0 left-0 w-full h-full opacity-0 z-20 m-0 p-0" aria-label="圖片對比滑桿" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 案例作品 Works -->
+    <section id="works" class="py-24 px-6 bg-gray-100/70 section-reveal">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">過往專案</h2>
+                    <p class="text-gray-500">理性解構空間，感性重塑品牌。</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button class="px-4 py-2 bg-gray-900 text-white rounded-full text-sm font-medium">全部</button>
+                    <button class="px-4 py-2 bg-white text-gray-600 border border-gray-200 rounded-full text-sm font-medium hover:bg-gray-50">餐飲空間</button>
+                    <button class="px-4 py-2 bg-white text-gray-600 border border-gray-200 rounded-full text-sm font-medium hover:bg-gray-50">零售店面</button>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 works-grid">
+                <!-- 專案 1 -->
+                <div class="work-card relative rounded-2xl overflow-hidden bg-white shadow-sm cursor-pointer aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800" alt="咖啡店專案" class="w-full h-full object-cover">
+                    <div class="overlay absolute inset-0 bg-gray-900/80 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-2">Hygge 咖啡空間轉型</h3>
+                        <p class="text-gray-300 mb-6">餐飲空間 / 品牌識別統整</p>
+                        <span class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-gray-900 transition">查看專案詳情</span>
+                    </div>
+                </div>
+                <!-- 專案 2 -->
+                <div class="work-card relative rounded-2xl overflow-hidden bg-white shadow-sm cursor-pointer aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=800" alt="服飾店專案" class="w-full h-full object-cover">
+                    <div class="overlay absolute inset-0 bg-gray-900/80 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-2">Noir 服飾選品店</h3>
+                        <p class="text-gray-300 mb-6">零售店面 / 動線與陳列重塑</p>
+                        <span class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-gray-900 transition">查看專案詳情</span>
+                    </div>
+                </div>
+                 <!-- 專案 3 -->
+                 <div class="work-card relative rounded-2xl overflow-hidden bg-white shadow-sm cursor-pointer aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1517433367423-c7e5b0f35086?auto=format&fit=crop&q=80&w=800" alt="糕餅店專案" class="w-full h-full object-cover">
+                    <div class="overlay absolute inset-0 bg-gray-900/80 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-2">百年餅舖 視覺年輕化</h3>
+                        <p class="text-gray-300 mb-6">品牌識別 / 展售空間改造</p>
+                        <span class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-gray-900 transition">查看專案詳情</span>
+                    </div>
+                </div>
+                <!-- 專案 4 -->
+                <div class="work-card relative rounded-2xl overflow-hidden bg-white shadow-sm cursor-pointer aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=800" alt="選物店專案" class="w-full h-full object-cover">
+                    <div class="overlay absolute inset-0 bg-gray-900/80 flex flex-col items-center justify-center p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white mb-2">Objets 日常選物</h3>
+                        <p class="text-gray-300 mb-6">零售店面 / 空間留白設計</p>
+                        <span class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-gray-900 transition">查看專案詳情</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <!-- 團隊/理念 Team -->
+    <section id="team" class="py-24 px-6 bg-white/70 section-reveal">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/3">
+                <div class="aspect-square rounded-full overflow-hidden border-4 border-gray-100 shadow-lg bg-gray-100 flex items-center justify-center">
+                    <!-- 替換為火柴人圖示 -->
+                    <!-- 替換為經典火柴人 SVG 圖示 -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-1/2 h-1/2 text-gray-700" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- 頭部 -->
+                        <circle cx="50" cy="25" r="12" />
+                        <!-- 身體 -->
+                        <line x1="50" y1="37" x2="50" y2="65" />
+                        <!-- 手部 -->
+                        <line x1="25" y1="45" x2="75" y2="45" />
+                        <!-- 腿部 -->
+                        <line x1="50" y1="65" x2="30" y2="90" />
+                        <line x1="50" y1="65" x2="70" y2="90" />
+                    </svg>
+                </div>
+            </div>
+            <div class="w-full md:w-2/3">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">少即是多，快即是準。</h2>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    作為咸閒不鹹的創辦人，我深知傳統設計流程對許多中小企業主來說過於沈重。我們致力於提供「高效率」的對話，用理性的灰色調和設計思維，為您的品牌褪去雜亂，留下最核心的商業價值與空間美學。
+                </p>
+                <div class="font-bold text-gray-900 text-xl">阿咸</div>
+                <div class="text-sm text-gray-600 mb-2">創辦人 / 空間設計總監</div>
+                <div class="text-sm text-gray-500 font-medium">電話：0800-000-000</div>
+                <div class="text-sm text-gray-500 font-medium mt-1">專業：老屋翻新 / 商業空間動線規劃 / 品牌視覺統整</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡我們 Contact -->
+    <section id="contact" class="py-24 px-6 bg-gray-900/90 text-white section-reveal">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">啟動您的空間轉型</h2>
+                <p class="text-gray-400">填寫以下表單，我們將在 24 小時內與您聯繫，快速評估並安排初次討論。</p>
+            </div>
+            
+            <form id="contactForm" class="space-y-6 bg-gray-800 p-8 md:p-10 rounded-2xl">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-2">姓名 / 稱呼</label>
+                        <input type="text" id="name" required class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 text-white transition">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">聯絡信箱 (Email)</label>
+                        <input type="email" id="email" required class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 text-white transition">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-300 mb-2">店面類型</label>
+                    <select id="type" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-gray-500 text-white transition">
+                        <option value="dining">餐飲空間 (餐廳/咖啡廳/酒吧)</option>
+                        <option value="retail">零售店面 (服飾/選品/雜貨)</option>
+                        <option value="office">商業辦公空間</option>
+                        <option value="other">其他需求</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-300 mb-2">目前遇到的挑戰或需求描述</label>
+                    <textarea id="message" rows="4" required class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 text-white transition placeholder-gray-600" placeholder="例如：原本是老舊便當店，希望能轉型成現代感的簡餐店..."></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-white text-gray-900 font-bold text-lg py-4 rounded-lg hover:bg-gray-200 transition duration-300">
+                    送出預約表單
+                </button>
+
+                <!-- 成功訊息提示 (預設隱藏) -->
+                <div id="successMessage" class="hidden mt-4 p-4 bg-green-900/50 border border-green-500 text-green-200 rounded-lg text-center font-medium">
+                    訊息已成功發送！我們將盡快與您聯繫。
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-500 py-8 text-center text-sm border-t border-gray-800">
+        <p>&copy; 2026 咸閒不鹹 Salty Free Design Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript & GSAP 動畫設定 -->
+    <script>
+        // 註冊 GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            
+            // 1. 首頁進場動畫 (Hero Section)
+            const heroTimeline = gsap.timeline();
+            heroTimeline.from(".hero-content > *", {
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power3.out",
+                delay: 0.2
+            });
+
+            // 2. 區塊捲動觸發動畫 (ScrollTrigger) - 基本淡入與上浮
+            const revealSections = document.querySelectorAll(".section-reveal");
+            revealSections.forEach((section) => {
+                gsap.from(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%", // 當區塊頂部進入視窗 80% 高度時觸發
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+            });
+
+            // 3. 案例敘事 (Case Narrative) 逐條出現的敘事動畫
+            gsap.from(".story-step", {
+                scrollTrigger: {
+                    trigger: ".case-narrative",
+                    start: "top 75%",
+                },
+                x: -30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+
+            // 4. 作品列表交錯出現
+            gsap.from(".works-grid .work-card", {
+                scrollTrigger: {
+                    trigger: ".works-grid",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.15,
+                ease: "power2.out"
+            });
+        });
+
+        // 5. Before / After Slider 互動邏輯
+        const slider = document.getElementById('slider');
+        const beforeWrapper = document.getElementById('before-image-wrapper');
+        const sliderHandle = document.getElementById('slider-handle');
+
+        slider.addEventListener('input', (e) => {
+            const sliderValue = e.target.value;
+            // 更新 clip-path 以裁切頂層 (Before) 圖片
+            beforeWrapper.style.clipPath = `polygon(0 0, ${sliderValue}% 0, ${sliderValue}% 100%, 0 100%)`;
+            // 更新拉環的位置
+            sliderHandle.style.left = `${sliderValue}%`;
+        });
+
+        // 6. 表單送出模擬 (防止跳轉並顯示成功訊息)
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // 阻止表單預設送出行為
+            
+            // 這裡可以加入實際的 API 呼叫
+            // 為了展示互動，我們直接顯示成功訊息並清空表單
+            
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            submitBtn.textContent = '傳送中...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50');
+
+            setTimeout(() => {
+                successMessage.classList.remove('hidden');
+                contactForm.reset(); // 清空輸入框
+                
+                submitBtn.textContent = '送出預約表單';
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50');
+                
+                // 3秒後隱藏成功訊息
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                }, 3000);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
